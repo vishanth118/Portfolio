@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Protosem | Weekly Progress</title>
+<style>
+  :root{--navy:#08182f;--blue:#39c6ff;--sky:#eaf8ff;--ink:#17233a;--muted:#64748b;--line:#c5e9fa;--card:#fff}
+  *{box-sizing:border-box;margin:0;padding:0;font-family:Arial,Helvetica,sans-serif}
+  html{scroll-behavior:smooth}
+  body{min-height:100vh;background:linear-gradient(135deg,#f7fbff,#edf6fb);color:var(--ink);line-height:1.6}
+  header{position:relative;overflow:hidden;background:var(--navy);color:#fff;padding:68px 20px 56px;text-align:center}
+  header:after{content:"";position:absolute;width:440px;height:440px;border:1px solid rgba(57,198,255,.28);border-radius:50%;right:-170px;top:-210px;box-shadow:0 0 0 42px rgba(57,198,255,.04),0 0 0 84px rgba(57,198,255,.03)}
+  header>*{position:relative;z-index:1} header h1{font-size:clamp(2.4rem,6vw,4rem);letter-spacing:.04em}
+  header p{color:#b9eaff;margin-top:8px;font-size:1.05rem}.scroll-cue{display:inline-flex;gap:8px;align-items:center;margin-top:28px;color:#fff;text-decoration:none;font-weight:bold;font-size:.92rem}.scroll-cue span{display:grid;place-items:center;width:26px;height:26px;border:1px solid #56d1ff;border-radius:50%;animation:bob 1.8s infinite}
+  .container{width:min(920px,90%);margin:0 auto;padding:40px 0 64px}.intro{padding:26px 28px;background:#fff;border-radius:18px;box-shadow:0 12px 30px rgba(8,24,47,.08);margin-bottom:34px}.intro h2{font-size:1.45rem;margin-bottom:8px}.intro p{color:#526178}
+  .progress-wrap{position:sticky;top:0;z-index:5;padding:12px 0;background:linear-gradient(180deg,#f7fbff 72%,transparent)}.progress-meta{display:flex;justify-content:space-between;font-size:.82rem;font-weight:bold;color:#526178;margin-bottom:7px}.progress-track{height:7px;border-radius:9px;background:#dcecf3;overflow:hidden}.progress-track span{display:block;width:0;height:100%;border-radius:inherit;background:linear-gradient(90deg,#0c80ba,var(--blue));transition:width .25s ease}
+  .timeline{position:relative;padding:26px 0 8px}.timeline:before{content:"";position:absolute;left:50%;top:0;bottom:0;width:3px;background:var(--line);transform:translateX(-50%)}
+  .week{position:relative;width:calc(50% - 38px);margin:0 0 34px;padding:23px 24px;background:var(--card);border:1px solid #e1eef4;border-radius:16px;box-shadow:0 10px 25px rgba(8,24,47,.07);opacity:.25;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease,box-shadow .25s ease}.week:nth-child(odd){margin-right:auto}.week:nth-child(even){margin-left:auto}.week:after{content:"";position:absolute;top:29px;width:17px;height:17px;border:4px solid #fff;border-radius:50%;background:#9ddff8;box-shadow:0 0 0 3px #9ddff8}.week:nth-child(odd):after{right:-49px}.week:nth-child(even):after{left:-49px}.week.visible{opacity:1;transform:translateY(0)}.week.active{border-color:#9ddff8;box-shadow:0 14px 30px rgba(8,116,166,.16)}.week.active:after{background:var(--blue);box-shadow:0 0 0 3px var(--blue),0 0 0 9px rgba(57,198,255,.18)}
+  .week-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}.week h3{font-size:1.25rem;color:var(--navy)}.edit{display:inline-block;background:#e8f8ff;color:#087cab;border-radius:7px;padding:5px 9px;font-weight:bold;cursor:pointer;text-decoration:none}.edit:hover{background:#ccefff}.summary{color:#4b5b72;margin:12px 0 0}.back{display:inline-block;margin-top:26px;background:var(--navy);color:#fff;text-decoration:none;padding:12px 20px;border-radius:9px;font-weight:bold}.back:hover{background:#0c80ba}footer{background:var(--navy);color:#d6eff9;text-align:center;padding:20px}
+  @keyframes bob{50%{transform:translateY(5px)}}@keyframes open{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:none}}
+  @media(max-width:680px){header{padding:54px 20px 44px}.container{width:min(94%,620px)}.timeline{padding-left:30px}.timeline:before{left:10px}.week,.week:nth-child(n){width:100%;margin:0 0 22px}.week:after,.week:nth-child(n):after{left:-29px;right:auto;top:27px}.intro{padding:22px}.progress-wrap{top:0}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Protosem</h1>
+  <p>Scroll through the journey — one week, one milestone at a time.</p>
+  <a class="scroll-cue" href="#journey">Explore progress <span>↓</span></a>
+</header>
+<main class="container">
+  <section class="intro">
+    <h2>What happened each week?</h2>
+    <p>Follow the timeline to see each stage of the Protosem journey. Select <strong>View more</strong> to open a full weekly record with that week's work and photos.</p>
+  </section>
+  <div class="progress-wrap" aria-label="Timeline progress"><div class="progress-meta"><span id="current-week">Week 0 in view</span><span id="percent">0% explored</span></div><div class="progress-track"><span id="progress-fill"></span></div></div>
+  <section class="timeline" id="journey" aria-label="Protosem weekly progress"></section>
+  <a class="back" href="index.html">← Back to Portfolio</a>
+</main>
+<footer><p>© 2026 Vishanth R D</p></footer>
+<script>
+  const milestones=[
+    ['Getting started','Introduced the Protosem program, set goals, and mapped the learning journey.'],
+    ['Foundation building','Strengthened the core concepts needed for the project work ahead.'],
+    ['Idea exploration','Explored possible problem statements and shortlisted a direction.'],
+    ['Research phase','Collected references, studied existing solutions, and noted requirements.'],
+    ['Planning the build','Defined the workflow, resources, and first implementation tasks.'],
+    ['Skill practice','Practised the key technical skills required for the selected project.'],
+    ['Early prototype','Created an initial proof of concept and identified improvement areas.'],
+    ['Testing assumptions','Tested the prototype approach and documented what worked.'],
+    ['Iteration one','Refined the design based on observations and feedback.'],
+    ['Midpoint review','Reviewed progress, challenges, and priorities for the next stage.'],
+    ['Development sprint','Focused on building the main project features.'],
+    ['Integration work','Connected the individual parts into a more complete system.'],
+    ['Performance checks','Measured results and looked for reliability improvements.'],
+    ['Problem solving','Addressed issues found during testing and tuned the solution.'],
+    ['Feature refinement','Improved usability, performance, and presentation.'],
+    ['Documentation','Organized the work, decisions, and evidence from the journey.'],
+    ['Feedback loop','Collected feedback and used it to make final adjustments.'],
+    ['Final testing','Validated the completed work against the original goals.'],
+    ['Showcase preparation','Prepared the project story, demonstrations, and key outcomes.'],
+    ['Journey recap','Reviewed achievements, lessons learned, and next steps.'],
+    ['Next steps','Outlined the next goals and opportunities to continue the Protosem journey.']
+  ];
+  const journey=document.getElementById('journey');
+  milestones.forEach(([title,summary],i)=>{const week=i;const heading=`Week ${week}: ${title}`;journey.insertAdjacentHTML('beforeend',`<article class="week" data-week="${week}"><div class="week-head"><h3>${heading}</h3><a class="edit" href="weekly-detail.html?week=${week}" target="_blank" rel="noopener" aria-label="View more about ${heading}">View more →</a></div><p class="summary">${summary}</p></article>`)});
+  const cards=[...document.querySelectorAll('.week')],fill=document.getElementById('progress-fill'),current=document.getElementById('current-week'),percent=document.getElementById('percent');
+  const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');cards.forEach(card=>card.classList.toggle('active',card===entry.target));const week=+entry.target.dataset.week;const value=Math.round((week+1)/milestones.length*100);fill.style.width=value+'%';current.textContent=`Week ${week} in view`;percent.textContent=`${value}% explored`}}),{threshold:.55});cards.forEach(card=>observer.observe(card));
+</script>
+</body>
+</html>
