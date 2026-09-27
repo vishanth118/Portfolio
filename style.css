@@ -1,0 +1,31 @@
+:root{color-scheme:dark;--bg:#100e10;--panel:rgba(27,24,26,.9);--line:rgba(255,255,255,.12);--text:#f7f2ed;--muted:#b6aaa3;--gold:#ffc928;--orange:#ff763e}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:95px}
+body{min-height:100vh;background:radial-gradient(ellipse at 83% 9%,rgba(255,109,44,.3),transparent 24rem),radial-gradient(ellipse at 10% 45%,rgba(112,48,32,.2),transparent 28rem),linear-gradient(135deg,#100e10,#191416 58%,#100e10);background-attachment:fixed;color:var(--text);line-height:1.6}
+a{color:#f4c871}
+.site-nav{position:sticky;top:12px;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:18px;width:min(1120px,calc(100% - 36px));margin:18px auto 24px;padding:12px 18px;border:1px solid var(--line);border-radius:15px;background:rgba(15,14,18,.9);backdrop-filter:blur(16px);box-shadow:0 12px 35px #0005}
+.brand{display:flex;align-items:center;gap:10px;color:var(--text);font-size:.8rem;font-weight:700;letter-spacing:.1em;text-decoration:none;white-space:nowrap}
+.brand:before{content:"";width:10px;height:10px;border-radius:50%;background:var(--gold);box-shadow:0 0 14px var(--gold)}
+.nav-links{display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:4px}
+.nav-links a{padding:7px 10px;border:1px solid transparent;border-radius:999px;color:#c4bbb6;text-decoration:none;font-size:.85rem;transition:.2s}
+.nav-links a:hover,.nav-links a:focus-visible{color:#fff;border-color:rgba(255,201,40,.35);background:rgba(255,201,40,.1);outline:none}
+body:not(:has(.shell))>header{width:min(1120px,calc(100% - 36px));margin:0 auto;border:1px solid var(--line);border-radius:18px;background:linear-gradient(110deg,rgba(17,15,17,.96),rgba(44,27,23,.83));box-shadow:0 24px 70px #0008;text-align:left;padding:48px clamp(24px,6vw,70px)}
+body:not(:has(.shell))>header>div,body:not(:has(.shell))>main{width:min(920px,calc(100% - 36px));margin-left:auto;margin-right:auto}
+body:not(:has(.shell))>main{padding:30px 0 64px}
+body:not(:has(.shell))>header h1{color:var(--text)}
+body:not(:has(.shell))>header p{color:#d2c7c0}
+body:not(:has(.shell)) .eyebrow{color:var(--gold)}
+body:not(:has(.shell)) .section,body:not(:has(.shell)) .intro{margin-bottom:18px;border:1px solid var(--line);border-radius:15px;background:var(--panel);box-shadow:0 16px 40px #0004;color:var(--text)}
+body:not(:has(.shell)) .section h2,body:not(:has(.shell)) .intro h2{color:var(--gold)}
+body:not(:has(.shell)) .section p,body:not(:has(.shell)) .intro p,body:not(:has(.shell)) .summary{color:#ded5d0}
+body:not(:has(.shell)) .activity-list h3,body:not(:has(.shell)) .week h3{color:#fff}
+body:not(:has(.shell)) .tag{border-color:rgba(255,201,40,.25);background:rgba(255,201,40,.07);color:#f6e4c8}
+body:not(:has(.shell)) .week{border-color:var(--line);background:var(--panel);box-shadow:0 10px 30px #0004}
+body:not(:has(.shell)) .week.active{border-color:rgba(255,201,40,.5);box-shadow:0 14px 30px rgba(255,137,56,.13)}
+body:not(:has(.shell)) .timeline:before{background:rgba(255,201,40,.24)}
+body:not(:has(.shell)) .week:after{border-color:#1b181a;background:#927148;box-shadow:0 0 0 3px #927148}
+body:not(:has(.shell)) .week.active:after{background:var(--gold);box-shadow:0 0 0 3px var(--gold),0 0 0 9px rgba(255,201,40,.15)}
+body:not(:has(.shell)) .edit,body:not(:has(.shell)) .drive-link,body:not(:has(.shell)) .back{border:1px solid rgba(255,201,40,.3);border-radius:999px;background:rgba(255,201,40,.1);color:#ffe39b}
+body:not(:has(.shell)) .edit:hover,body:not(:has(.shell)) .drive-link:hover,body:not(:has(.shell)) .back:hover{background:rgba(255,201,40,.2)}
+body:not(:has(.shell)) footer{background:transparent;color:#a89a92}
+@media(max-width:720px){.site-nav{top:6px;align-items:flex-start;flex-direction:column;gap:8px;width:calc(100% - 24px);margin:8px auto 14px;padding:11px 13px}.nav-links{justify-content:flex-start;gap:2px}.nav-links a{padding:5px 8px;font-size:.78rem}body:not(:has(.shell))>header{width:calc(100% - 24px);padding:36px 22px}body:not(:has(.shell))>header>div,body:not(:has(.shell))>main{width:100%}}
