@@ -23,6 +23,11 @@ body:not(:has(.shell)) .tag{border-color:rgba(255,201,40,.25);background:rgba(25
 body:not(:has(.shell)) .week{border-color:var(--line);background:var(--panel);box-shadow:0 10px 30px #0004}
 body:not(:has(.shell)) .week.active{border-color:rgba(255,201,40,.5);box-shadow:0 14px 30px rgba(255,137,56,.13)}
 body:not(:has(.shell)) .timeline:before{background:rgba(255,201,40,.24)}
+body:not(:has(.shell)) .progress-wrap{background:linear-gradient(180deg,rgba(16,14,16,.97) 72%,transparent);backdrop-filter:blur(8px)}
+body:not(:has(.shell)) .progress-meta{color:#d7c9c0}
+body:not(:has(.shell)) .progress-track{background:#392d29}
+body:not(:has(.shell)) .progress-track span{background:linear-gradient(90deg,var(--gold),var(--orange))}
+body:not(:has(.shell)) .scroll-cue span{border-color:var(--gold);color:var(--gold)}
 body:not(:has(.shell)) .week:after{border-color:#1b181a;background:#927148;box-shadow:0 0 0 3px #927148}
 body:not(:has(.shell)) .week.active:after{background:var(--gold);box-shadow:0 0 0 3px var(--gold),0 0 0 9px rgba(255,201,40,.15)}
 body:not(:has(.shell)) .edit,body:not(:has(.shell)) .drive-link,body:not(:has(.shell)) .back{border:1px solid rgba(255,201,40,.3);border-radius:999px;background:rgba(255,201,40,.1);color:#ffe39b}
