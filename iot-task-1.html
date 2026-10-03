@@ -5,7 +5,7 @@
 <title>ESP32 Web-Based LED Control | Vishanth R D</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="iot-task.css">
 <style>
 .media-grid{align-items:stretch}.project-image{display:block;width:100%;height:100%;min-height:250px;object-fit:contain;border-radius:12px;background:#141114}.media-grid video{display:block;width:100%;height:100%;min-height:250px;max-height:440px;border-radius:12px;background:#080708;object-fit:contain}.detail-card p{color:#ded5d0}.detail-card p+p{margin-top:9px}.info-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.info-grid h3{margin:0 0 8px;color:#f0c993;font-size:1rem}.info-grid ul{padding-left:20px;color:#ded5d0}.flow{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:9px;margin-top:14px}.flow span{padding:9px 12px;border:1px solid rgba(255,201,40,.25);border-radius:10px;background:rgba(255,201,40,.07);color:#f6e4c8;font-size:.85rem}.flow b{color:var(--gold)}.detail-card ol{padding-left:22px;color:#ded5d0}@media(max-width:720px){.info-grid{grid-template-columns:1fr}.media-grid video,.project-image{min-height:180px}}
-</style></head>
+.complete-report details>summary{cursor:pointer;color:#f0c993;font-weight:700}.markdown-content{margin-top:18px}.markdown-content h2{margin:24px 0 10px;color:var(--gold);font-size:1.12rem}.markdown-content h3{margin:18px 0 8px;color:#f0c993;font-size:1rem}.markdown-content p,.markdown-content li{color:#ded5d0}.markdown-content p{margin:10px 0}.markdown-content ul,.markdown-content ol{padding-left:23px;margin:8px 0 14px}.markdown-content pre{overflow:auto;margin:14px 0;padding:16px;border:1px solid var(--line);border-radius:10px;background:#111;color:#e6dfd8;font-size:.82rem;line-height:1.55}.markdown-content pre code{font-family:Consolas,monospace}.markdown-content code{padding:1px 4px;border-radius:4px;background:#111;color:#f6e4c8;font-family:Consolas,monospace;font-size:.9em}.markdown-content .notes-table{width:100%;margin:12px 0;border-collapse:collapse;color:#ded5d0}.markdown-content .notes-table th,.markdown-content .notes-table td{padding:9px 10px;border:1px solid var(--line);text-align:left;vertical-align:top}.markdown-content .notes-table th{color:#f0c993;background:rgba(255,201,40,.07)}.markdown-content hr{margin:20px 0;border:0;border-top:1px solid var(--line)}.notes-download{margin-top:16px}.notes-download a{color:#f4c871;text-decoration:none}.notes-download a:hover{text-decoration:underline}</style></head>
 <body>
 <nav class="site-nav" aria-label="Main navigation"><a class="brand" href="index.html">VISHANTH R D</a><div class="nav-links"><a href="index.html">Home</a><a href="about.html">About</a><a href="projects.html">Projects</a><a href="iot-projects.html">IoT Projects</a><a href="protosem.html">ProtoSem</a></div></nav>
 <main>
@@ -17,6 +17,377 @@
 <section class="detail-card"><h2>Hardware and software</h2><div class="info-grid"><div><h3>Hardware</h3><ul><li>ESP32 development board</li><li>Built-in LED or LED on GPIO 2</li><li>USB cable for power and programming</li><li>Wi-Fi network and a browser device</li></ul></div><div><h3>Software and protocols</h3><ul><li>Arduino IDE and ESP32 board package</li><li>C++ with the ESP32 Wi-Fi library</li><li>HTML control interface</li><li>HTTP requests over the local Wi-Fi network</li></ul></div></div><p style="margin-top:14px">An external LED can be connected between GPIO 2 and GND; use a series resistor to limit current. The built-in LED needs no external wiring.</p></section>
 <section class="detail-card"><h2>How it works</h2><ol><li>Power the ESP32 and connect it to Wi-Fi.</li><li>Read the assigned IP address from the Serial Monitor.</li><li>Open that address in a browser on the same network.</li><li>Press LED ON or LED OFF; the browser sends the matching HTTP request.</li><li>The ESP32 changes GPIO 2 and the LED state.</li></ol><p style="margin-top:14px">In the request handler, <code>GET /LED=ON</code> sets GPIO 2 HIGH and <code>GET /LED=OFF</code> sets it LOW.</p><p>Keep real Wi-Fi credentials out of public code and screenshots.</p></section>
 <section class="detail-card"><h2>Result and learning</h2><p>The project demonstrates remote LED control through an ESP32-hosted webpage. It connects embedded programming, Wi-Fi communication, HTTP requests, HTML, and GPIO output in one small IoT system.</p><p>This task provided hands-on practice setting up the ESP32 web server, finding its IP address, building browser controls, and troubleshooting Wi-Fi connectivity and request paths.</p></section>
-<section class="detail-card"><h2>Project link</h2><p>Add a repository or source link here when available.</p><a class="project-link" href="#" aria-disabled="true">Add project URL in VS Code</a></section>
+<section class="detail-card complete-report"><h2>Complete project write-up</h2><details><summary>Expand to read all sections from the project notes</summary><div class="markdown-content"><h2>IoT Session — Task 1: ESP32 Web-Based LED Control</h2>
+<h3>1. Overview</h3>
+<h4>Objective</h4>
+<p>The objective of this task is to develop a simple IoT system using an <strong>ESP32 microcontroller</strong> that connects to Wi-Fi and allows an LED to be controlled through a web browser.</p>
+<p>The system provides two buttons, <strong>ON</strong> and <strong>OFF</strong>, on a webpage. By pressing these buttons, the user can remotely control the LED connected to the ESP32.</p>
+<h4>Problem Being Addressed</h4>
+<p>Normally, an LED can be controlled using a physical switch or directly through an Arduino program. In this project, I wanted to control the LED <strong>wirelessly through a webpage</strong> without using a physical switch.</p>
+<p>This demonstrates the basic concept of an IoT device communicating with a user through a network.</p>
+<h4>Project Summary</h4>
+<p>In this project, the ESP32 is connected to a Wi-Fi network and works as a small web server. After connecting, the ESP32 provides an IP address.</p>
+<p>I enter this IP address into a web browser. The ESP32 then displays a webpage containing <strong>ON</strong> and <strong>OFF</strong> buttons.</p>
+<p>When I press <strong>ON</strong>, the ESP32 receives the request and turns the LED ON. When I press <strong>OFF</strong>, the ESP32 turns the LED OFF.</p>
+<h4>Basic Operation</h4>
+<pre><code>Web Browser
+     ↓
+Wi-Fi
+     ↓
+ESP32 Web Server
+     ↓
+GPIO 2
+     ↓
+LED</code></pre>
+<hr>
+<h3>2. Concepts</h3>
+<h4>ESP32 Web Server</h4>
+<p>The <strong>ESP32</strong> is a Wi-Fi-enabled microcontroller. In this project, I used the ESP32 as a web server.</p>
+<p>The ESP32 performs two main tasks:</p>
+<ol>
+<li>Connects to the Wi-Fi network.</li>
+<li>Controls the LED according to commands received from the webpage.</li>
+</ol>
+<h4>Wi-Fi Communication</h4>
+<p>The ESP32 connects to my Wi-Fi network using its built-in Wi-Fi capability.</p>
+<p>After successfully connecting, the ESP32 receives an <strong>IP address</strong>. I use this IP address in a browser to access the control webpage.</p>
+<p>Both the ESP32 and the device accessing the webpage need to be connected to the same local network for this setup.</p>
+<h4>HTTP Request</h4>
+<p>When I press an ON or OFF button, the browser sends an HTTP request to the ESP32.</p>
+<p>For my project:</p>
+<pre><code>/LED=ON</code></pre>
+<p>turns the LED ON.</p>
+<pre><code>/LED=OFF</code></pre>
+<p>turns the LED OFF.</p>
+<p>The ESP32 reads the request and changes the GPIO 2 output accordingly.</p>
+<h4>HTML Interface</h4>
+<p>I used <strong>HTML</strong> to create the webpage.</p>
+<p>The webpage contains two buttons:</p>
+<pre><code>[ LED ON ]
+
+[ LED OFF ]</code></pre>
+<p>These buttons send commands to the ESP32 web server.</p>
+<hr>
+<h3>3. System Design</h3>
+<h4>System Architecture</h4>
+<p>The complete system consists of:</p>
+<pre><code>User
+  ↓
+Web Browser
+  ↓
+Wi-Fi Network
+  ↓
+ESP32 Web Server
+  ↓
+GPIO 2
+  ↓
+LED</code></pre>
+<h4>Data Flow</h4>
+<ol>
+<li>I power the ESP32 using a USB cable.</li>
+<li>The ESP32 connects to Wi-Fi.</li>
+<li>The ESP32 receives an IP address.</li>
+<li>I enter the IP address in the browser.</li>
+<li>The ESP32 displays the LED control webpage.</li>
+<li>I press the <strong>LED ON</strong> button.</li>
+<li>The browser sends an HTTP request.</li>
+<li>The ESP32 receives and processes the request.</li>
+<li>GPIO 2 is set HIGH.</li>
+<li>The LED turns ON.</li>
+</ol>
+<p>The same process happens for the OFF command, except GPIO 2 is set LOW.</p>
+<h4>Block Diagram</h4>
+<pre><code>Laptop / Mobile Browser
+          ↓
+     Wi-Fi Network
+          ↓
+    ESP32 Web Server
+          ↓
+       GPIO 2
+          ↓
+          LED</code></pre>
+<hr>
+<h3>4. Hardware and Software</h3>
+<h4>Hardware Components</h4>
+<table class="notes-table"><thead><tr><th>Component</th><th>Purpose</th></tr></thead><tbody>
+<tr><td>ESP32 Development Board</td><td>Main microcontroller and web server</td></tr>
+<tr><td>Built-in LED / LED</td><td>Output controlled through webpage</td></tr>
+<tr><td>USB Cable</td><td>Programming and powering the ESP32</td></tr>
+<tr><td>Wi-Fi Network / Hotspot</td><td>Wireless communication</td></tr>
+<tr><td>Computer / Mobile</td><td>Accessing the control webpage</td></tr>
+</tbody></table>
+<p>For my setup, an <strong>external relay or AC bulb is not required</strong> because I am controlling the LED directly from the ESP32.</p>
+<h4>Software Used</h4>
+<table class="notes-table"><thead><tr><th>Software / Tool</th><th>Purpose</th></tr></thead><tbody>
+<tr><td>Arduino IDE</td><td>Writing and uploading the ESP32 program</td></tr>
+<tr><td>ESP32 Board Package</td><td>Allows programming of the ESP32</td></tr>
+<tr><td>C/C++</td><td>Programming the ESP32</td></tr>
+<tr><td>HTML</td><td>Creating the control webpage</td></tr>
+<tr><td>Web Browser</td><td>Controlling the LED</td></tr>
+<tr><td>Wi-Fi</td><td>Communication between ESP32 and browser</td></tr>
+</tbody></table>
+<hr>
+<h3>5. Wiring / Setup</h3>
+<p>For my setup, I used the ESP32's <strong>GPIO 2</strong> to control the LED.</p>
+<h4>Pin Connection</h4>
+<table class="notes-table"><thead><tr><th>ESP32</th><th>Component</th><th>Function</th></tr></thead><tbody>
+<tr><td>GPIO 2</td><td>LED</td><td>Digital output</td></tr>
+<tr><td>GND</td><td>LED circuit</td><td>Ground</td></tr>
+</tbody></table>
+<p>If I use the <strong>built-in LED</strong>, no external LED wiring is required.</p>
+<h4>Circuit Operation</h4>
+<p>When GPIO 2 is set to:</p>
+<pre><code>HIGH → LED ON
+LOW  → LED OFF</code></pre>
+<p>If an external LED is used, a resistor should be connected in series with the LED to limit current and protect the LED and ESP32 GPIO.</p>
+<hr>
+<h3>6. Implementation</h3>
+<h4>Program Logic</h4>
+<p>The program works in the following sequence:</p>
+<ol>
+<li>Define the Wi-Fi name and password.</li>
+<li>Set GPIO 2 as an output.</li>
+<li>Connect the ESP32 to Wi-Fi.</li>
+<li>Start the web server.</li>
+<li>Display the ESP32 IP address in Serial Monitor.</li>
+<li>Open the IP address in a browser.</li>
+<li>Display the ON and OFF buttons.</li>
+<li>Wait for a button command.</li>
+<li>Process the HTTP request.</li>
+<li>Change the LED state.</li>
+</ol>
+<h4>ESP32 Program</h4>
+<pre><code>#include &lt;WiFi.h&gt;
+
+const char* ssid = &quot;YOUR_WIFI_NAME&quot;;
+const char* password = &quot;YOUR_WIFI_PASSWORD&quot;;
+
+WiFiServer server(80);
+
+const int ledPin = 2;
+
+void setup() {
+
+  Serial.begin(115200);
+
+  pinMode(ledPin, OUTPUT);
+
+  // LED OFF initially
+  digitalWrite(ledPin, LOW);
+
+  // Connect to Wi-Fi
+  WiFi.begin(ssid, password);
+
+  Serial.print(&quot;Connecting to Wi-Fi&quot;);
+
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(&quot;.&quot;);
+  }
+
+  Serial.println();
+  Serial.println(&quot;Wi-Fi connected&quot;);
+
+  Serial.print(&quot;ESP32 IP Address: &quot;);
+  Serial.println(WiFi.localIP());
+
+  // Start web server
+  server.begin();
+}
+
+void loop() {
+
+  WiFiClient client = server.available();
+
+  if (!client) {
+    return;
+  }
+
+  String request = client.readStringUntil('\r');
+  client.flush();
+
+  // LED ON
+  if (request.indexOf(&quot;GET /LED=ON&quot;) &gt;= 0) {
+    digitalWrite(ledPin, HIGH);
+  }
+
+  // LED OFF
+  if (request.indexOf(&quot;GET /LED=OFF&quot;) &gt;= 0) {
+    digitalWrite(ledPin, LOW);
+  }
+
+  // Send webpage
+  client.println(&quot;HTTP/1.1 200 OK&quot;);
+  client.println(&quot;Content-Type: text/html&quot;);
+  client.println(&quot;Connection: close&quot;);
+  client.println();
+
+  client.println(&quot;&lt;!DOCTYPE html&gt;&quot;);
+  client.println(&quot;&lt;html&gt;&quot;);
+  client.println(&quot;&lt;head&gt;&quot;);
+  client.println(&quot;&lt;title&gt;ESP32 LED Control&lt;/title&gt;&quot;);
+  client.println(&quot;&lt;/head&gt;&quot;);
+
+  client.println(&quot;&lt;body&gt;&quot;);
+  client.println(&quot;&lt;h1&gt;ESP32 LED Control&lt;/h1&gt;&quot;);
+
+  client.println(&quot;&lt;p&gt;&quot;);
+  client.println(&quot;&lt;a href=\&quot;/LED=ON\&quot;&gt;&quot;);
+  client.println(&quot;&lt;button&gt;LED ON&lt;/button&gt;&quot;);
+  client.println(&quot;&lt;/a&gt;&quot;);
+  client.println(&quot;&lt;/p&gt;&quot;);
+
+  client.println(&quot;&lt;p&gt;&quot;);
+  client.println(&quot;&lt;a href=\&quot;/LED=OFF\&quot;&gt;&quot;);
+  client.println(&quot;&lt;button&gt;LED OFF&lt;/button&gt;&quot;);
+  client.println(&quot;&lt;/a&gt;&quot;);
+  client.println(&quot;&lt;/p&gt;&quot;);
+
+  client.println(&quot;&lt;/body&gt;&quot;);
+  client.println(&quot;&lt;/html&gt;&quot;);
+
+  delay(1);
+
+  client.stop();
+}</code></pre>
+<h4>Code Explanation</h4>
+<p><strong>Wi-Fi Library</strong></p>
+<pre><code>#include &lt;WiFi.h&gt;</code></pre>
+<p>This library provides Wi-Fi communication functions for the ESP32.</p>
+<p><strong>Wi-Fi Credentials</strong></p>
+<pre><code>const char* ssid = &quot;YOUR_WIFI_NAME&quot;;
+const char* password = &quot;YOUR_WIFI_PASSWORD&quot;;</code></pre>
+<p>These values specify the Wi-Fi network to which the ESP32 connects.</p>
+<p><strong>LED Pin</strong></p>
+<pre><code>const int ledPin = 2;</code></pre>
+<p>GPIO 2 is configured as the digital output for the LED.</p>
+<p><strong>Web Server</strong></p>
+<pre><code>WiFiServer server(80);</code></pre>
+<p>The ESP32 creates a web server on port 80, which is the standard HTTP port.</p>
+<p><strong>LED ON</strong></p>
+<pre><code>if (request.indexOf(&quot;GET /LED=ON&quot;) &gt;= 0) {
+  digitalWrite(ledPin, HIGH);
+}</code></pre>
+<p>When the ESP32 receives the ON request, it sets the LED GPIO HIGH.</p>
+<p><strong>LED OFF</strong></p>
+<pre><code>if (request.indexOf(&quot;GET /LED=OFF&quot;) &gt;= 0) {
+  digitalWrite(ledPin, LOW);
+}</code></pre>
+<p>When the ESP32 receives the OFF request, it sets the LED GPIO LOW.</p>
+<hr>
+<h3>7. HTML Interface</h3>
+<p>The webpage created by my ESP32 contains two buttons:</p>
+<pre><code>ESP32 LED Control
+
+[ LED ON ]
+
+[ LED OFF ]</code></pre>
+<p>When I press <strong>LED ON</strong>, the browser sends:</p>
+<pre><code>/LED=ON</code></pre>
+<p>The ESP32 receives this request and sets GPIO 2 to HIGH.</p>
+<p>When I press <strong>LED OFF</strong>, the browser sends:</p>
+<pre><code>/LED=OFF</code></pre>
+<p>The ESP32 then sets GPIO 2 to LOW.</p>
+<hr>
+<h3>8. How the Webpage Communicates with ESP32</h3>
+<h4>ON Command</h4>
+<pre><code>User clicks LED ON
+        ↓
+Browser sends HTTP request
+        ↓
+GET /LED=ON
+        ↓
+ESP32 receives request
+        ↓
+GPIO 2 = HIGH
+        ↓
+LED turns ON</code></pre>
+<h4>OFF Command</h4>
+<pre><code>User clicks LED OFF
+        ↓
+Browser sends HTTP request
+        ↓
+GET /LED=OFF
+        ↓
+ESP32 receives request
+        ↓
+GPIO 2 = LOW
+        ↓
+LED turns OFF</code></pre>
+<p>The ESP32 and the browser are connected through the same Wi-Fi network.</p>
+<hr>
+<h3>9. Evidence</h3>
+<h4>Physical Setup</h4>
+<p>For my project, I can include:</p>
+<ul>
+<li>ESP32 development board</li>
+<li>USB connection</li>
+<li>ESP32 onboard LED</li>
+<li>Computer running Arduino IDE</li>
+</ul>
+<h4>Web Interface Screenshots</h4>
+<p>I can include screenshots showing:</p>
+<ul>
+<li>ESP32 IP address in Serial Monitor</li>
+<li>ESP32 LED Control webpage</li>
+<li>LED ON condition</li>
+<li>LED OFF condition</li>
+</ul>
+<h4>Demonstration Video</h4>
+<p>My demonstration video can show:</p>
+<ol>
+<li>Connecting the ESP32 to Wi-Fi.</li>
+<li>Opening the Serial Monitor.</li>
+<li>Getting the ESP32 IP address.</li>
+<li>Entering the IP address in the browser.</li>
+<li>Opening the LED control webpage.</li>
+<li>Clicking <strong>LED ON</strong>.</li>
+<li>Showing the LED turning ON.</li>
+<li>Clicking <strong>LED OFF</strong>.</li>
+<li>Showing the LED turning OFF.</li>
+</ol>
+<hr>
+<h3>10. Challenges and Fixes</h3>
+<h4>Challenge 1 — ESP32 Could Not Connect to Wi-Fi</h4>
+<p><strong>Problem:</strong> The ESP32 remained in the Wi-Fi connection process.</p>
+<p><strong>Solution:</strong> I checked the Wi-Fi name and password and made sure the ESP32 was within the Wi-Fi network range.</p>
+<h4>Challenge 2 — Webpage Could Not Be Opened</h4>
+<p><strong>Problem:</strong> The webpage could not be accessed.</p>
+<p><strong>Solution:</strong> I checked the IP address displayed in the Serial Monitor and made sure my computer was connected to the same Wi-Fi network.</p>
+<h4>Challenge 3 — LED Did Not Respond</h4>
+<p><strong>Problem:</strong> The LED did not change when the webpage button was pressed.</p>
+<p><strong>Solution:</strong> I checked the GPIO configuration and verified that the ON and OFF HTTP request paths were correctly programmed.</p>
+<h4>Challenge 4 — IP Address Changed</h4>
+<p><strong>Problem:</strong> The ESP32 can receive a different IP address after reconnecting to Wi-Fi.</p>
+<p><strong>Solution:</strong> I checked the current IP address shown in the Serial Monitor before opening the webpage.</p>
+<hr>
+<h3>11. Reflection</h3>
+<p>This task helped me understand how an <strong>ESP32 can be used as a web server to control a physical output through Wi-Fi</strong>.</p>
+<p>I learned how to connect the ESP32 to a Wi-Fi network, obtain its IP address, create a simple HTML webpage, and use HTTP requests to control an LED.</p>
+<p>Through this project, I gained practical experience in:</p>
+<ul>
+<li>ESP32 programming</li>
+<li>Wi-Fi communication</li>
+<li>Web server creation</li>
+<li>HTTP requests</li>
+<li>HTML webpage development</li>
+<li>GPIO control</li>
+<li>Basic IoT system architecture</li>
+</ul>
+<p>This project also gave me a foundation for developing more advanced IoT systems where devices can be controlled through web interfaces and cloud platforms.</p>
+<hr>
+<h3>Final Result</h3>
+<p>The completed project demonstrates <strong>web-based LED control using an ESP32</strong>.</p>
+<p>The ESP32 connects to Wi-Fi, starts a web server, provides an HTML control webpage, receives ON/OFF commands from the browser, and controls the LED through <strong>GPIO 2</strong>.</p>
+<h4>Final System</h4>
+<pre><code>Web Browser
+     ↓
+Wi-Fi
+     ↓
+ESP32 Web Server
+     ↓
+GPIO 2
+     ↓
+LED</code></pre></div></details><p class="notes-download"><a href="iot-task-1-notes.md" download>Download the original project notes (.md)</a></p></section><section class="detail-card"><h2>Project link</h2><p>Add a repository or source link here when available.</p><a class="project-link" href="#" aria-disabled="true">Add project URL in VS Code</a></section>
 </main><footer class="footer">&copy; 2026 Vishanth R D</footer>
 </body></html>
