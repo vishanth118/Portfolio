@@ -1,13 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IoT Projects | Vishanth R D</title><link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IoT Projects | Vishanth R D</title>
+<link rel="stylesheet" href="style.css">
 <style>
-main{width:min(920px,calc(100% - 36px));margin:0 auto;padding:20px 0 54px}.page-title{margin:12px 0 20px;color:var(--gold);font-size:clamp(2rem,6vw,3.2rem)}.project{margin-bottom:18px;padding:clamp(24px,5vw,42px);border:1px solid var(--line);border-left:3px solid rgba(255,201,40,.6);border-radius:16px;background:var(--panel);box-shadow:0 16px 40px #0004}.project h2{margin-bottom:8px;color:#fff;font-size:1.2rem}.project p{color:#ded5d0}.tag{display:inline-block;margin-top:14px;padding:6px 10px;border:1px solid rgba(255,201,40,.25);border-radius:999px;background:rgba(255,201,40,.07);color:#f6e4c8;font-size:.82rem}.footer{text-align:center;padding:20px;color:#a89a92;font-size:.85rem}@media(max-width:720px){main{width:calc(100% - 24px);padding-top:10px}}
-</style></head>
+main{width:min(1000px,calc(100% - 36px));margin:0 auto;padding:20px 0 54px}
+.page-title{margin:12px 0 8px;color:var(--gold);font-size:clamp(2rem,6vw,3.2rem)}
+.intro{margin:0 0 24px;color:#ded5d0}
+.task-list{display:grid;gap:16px}
+.task-card{overflow:hidden;border:1px solid var(--line);border-radius:16px;background:var(--panel);box-shadow:0 16px 40px #0004;transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease}
+.task-card:hover{transform:translateY(-4px);border-color:rgba(255,201,40,.55);box-shadow:0 20px 44px #0006}
+.task-card[open]{border-color:rgba(255,201,40,.45)}
+.task-card summary{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:22px 26px;cursor:pointer;list-style:none}
+.task-card summary::-webkit-details-marker{display:none}
+.task-card summary:focus-visible{outline:2px solid var(--gold);outline-offset:-4px;border-radius:16px}
+.task-number{display:block;color:var(--gold);font-size:.72rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
+.task-heading{display:block;margin-top:3px;color:var(--text);font-size:1.3rem}
+.task-hint{flex:none;color:#f0c993;font-size:.84rem}
+.task-card[open] .task-hint:after{content:"−"}.task-card:not([open]) .task-hint:after{content:"+"}
+.task-content{padding:0 26px 26px;border-top:1px solid var(--line);animation:reveal .25s ease both}
+.task-content>p{margin:18px 0;color:#ded5d0}
+.media-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0}
+.media-placeholder{display:grid;min-height:170px;place-items:center;padding:18px;border:1px dashed rgba(255,201,40,.4);border-radius:12px;background:rgba(255,201,40,.04);color:#cbbba9;text-align:center;font-size:.88rem}
+.media-placeholder strong{display:block;margin-bottom:5px;color:#f0c993}
+.task-content h3{margin:17px 0 8px;color:var(--gold);font-size:.82rem;letter-spacing:.12em;text-transform:uppercase}
+.tech-list{display:flex;flex-wrap:wrap;gap:8px;list-style:none}
+.tech-list li{padding:6px 10px;border:1px solid rgba(255,201,40,.25);border-radius:999px;background:rgba(255,201,40,.07);color:#f6e4c8;font-size:.82rem}
+.project-link{display:inline-flex;margin-top:18px;padding:9px 14px;border:1px solid rgba(255,201,40,.35);border-radius:999px;background:rgba(255,201,40,.1);color:#ffe39b;text-decoration:none;font-size:.84rem;font-weight:700;transition:background .2s ease,transform .2s ease}
+.project-link:hover{transform:translateY(-2px);background:rgba(255,201,40,.2)}
+.footer{text-align:center;padding:20px;color:#a89a92;font-size:.85rem}
+@keyframes reveal{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:720px){main{width:calc(100% - 24px);padding-top:10px}.task-card summary{padding:19px 20px}.task-content{padding:0 20px 22px}.media-grid{grid-template-columns:1fr}.media-placeholder{min-height:145px}}
+@media(prefers-reduced-motion:reduce){.task-card,.project-link{transition:none}.task-content{animation:none}}
+</style>
+</head>
 <body>
 <nav class="site-nav" aria-label="Main navigation"><a class="brand" href="index.html">VISHANTH R D</a><div class="nav-links"><a href="index.html">Home</a><a href="about.html">About</a><a href="projects.html">Projects</a><a href="iot-projects.html" aria-current="page">IoT Projects</a><a href="protosem.html">ProtoSem</a></div></nav>
-<main><h1 class="page-title">IoT Projects</h1>
-<article class="project"><h2>ESP32 Smart Home Automation</h2><p>Developed an IoT-based smart home automation system using ESP32 to control electrical appliances remotely.</p><span class="tag">IoT · ESP32 · Home Automation</span></article>
-</main><footer class="footer"><p>&copy; 2026 Vishanth R D</p></footer></body></html>
+<main>
+  <h1 class="page-title">IoT Projects</h1>
+  <p class="intro">Select a task card to view its project details. Replace the marked placeholders with your project information as you build each one.</p>
+  <div class="task-list">
+    <!-- EDIT GUIDE: For each task, update the title and description, add media paths, list components, and replace the project URL. -->
+    <details class="task-card">
+      <summary><span><span class="task-number">Task 1</span><span class="task-heading">Project title goes here</span></span><span class="task-hint" aria-hidden="true"></span></summary>
+      <div class="task-content">
+        <p>Add a 2–3 line description of the project here. Explain what it does, the problem it solves, and your contribution.</p>
+        <div class="media-grid">
+          <div class="media-placeholder"><span><strong>Project image</strong>Add an image path here, for example <code>images/iot-task-1.jpg</code>.<br><!-- Replace this placeholder with: <img src="images/iot-task-1.jpg" alt="Task 1 project"> --></span></div>
+          <div class="media-placeholder"><span><strong>Project video</strong>Add a video path here, for example <code>videos/iot-task-1.mp4</code>.<br><!-- Replace this placeholder with: <video controls src="videos/iot-task-1.mp4"></video> --></span></div>
+        </div>
+        <h3>Technologies and components</h3><ul class="tech-list"><li>Add technology</li><li>Add component</li></ul>
+        <a class="project-link" href="#" aria-label="Task 1 project link placeholder">Add project link</a>
+      </div>
+    </details>
+    <details class="task-card">
+      <summary><span><span class="task-number">Task 2</span><span class="task-heading">Project title goes here</span></span><span class="task-hint" aria-hidden="true"></span></summary>
+      <div class="task-content">
+        <p>Add a 2–3 line description of the project here. Explain what it does, the problem it solves, and your contribution.</p>
+        <div class="media-grid"><div class="media-placeholder"><span><strong>Project image</strong>Add an image path here, for example <code>images/iot-task-2.jpg</code>.<br><!-- Replace with an img element when ready. --></span></div><div class="media-placeholder"><span><strong>Project video</strong>Add a video path here, for example <code>videos/iot-task-2.mp4</code>.<br><!-- Replace with a video element when ready. --></span></div></div>
+        <h3>Technologies and components</h3><ul class="tech-list"><li>Add technology</li><li>Add component</li></ul><a class="project-link" href="#" aria-label="Task 2 project link placeholder">Add project link</a>
+      </div>
+    </details>
+    <details class="task-card">
+      <summary><span><span class="task-number">Task 3</span><span class="task-heading">Project title goes here</span></span><span class="task-hint" aria-hidden="true"></span></summary>
+      <div class="task-content">
+        <p>Add a 2–3 line description of the project here. Explain what it does, the problem it solves, and your contribution.</p>
+        <div class="media-grid"><div class="media-placeholder"><span><strong>Project image</strong>Add an image path here, for example <code>images/iot-task-3.jpg</code>.<br><!-- Replace with an img element when ready. --></span></div><div class="media-placeholder"><span><strong>Project video</strong>Add a video path here, for example <code>videos/iot-task-3.mp4</code>.<br><!-- Replace with a video element when ready. --></span></div></div>
+        <h3>Technologies and components</h3><ul class="tech-list"><li>Add technology</li><li>Add component</li></ul><a class="project-link" href="#" aria-label="Task 3 project link placeholder">Add project link</a>
+      </div>
+    </details>
+    <details class="task-card">
+      <summary><span><span class="task-number">Task 4</span><span class="task-heading">Project title goes here</span></span><span class="task-hint" aria-hidden="true"></span></summary>
+      <div class="task-content">
+        <p>Add a 2–3 line description of the project here. Explain what it does, the problem it solves, and your contribution.</p>
+        <div class="media-grid"><div class="media-placeholder"><span><strong>Project image</strong>Add an image path here, for example <code>images/iot-task-4.jpg</code>.<br><!-- Replace with an img element when ready. --></span></div><div class="media-placeholder"><span><strong>Project video</strong>Add a video path here, for example <code>videos/iot-task-4.mp4</code>.<br><!-- Replace with a video element when ready. --></span></div></div>
+        <h3>Technologies and components</h3><ul class="tech-list"><li>Add technology</li><li>Add component</li></ul><a class="project-link" href="#" aria-label="Task 4 project link placeholder">Add project link</a>
+      </div>
+    </details>
+    <details class="task-card">
+      <summary><span><span class="task-number">Task 5</span><span class="task-heading">Project title goes here</span></span><span class="task-hint" aria-hidden="true"></span></summary>
+      <div class="task-content">
+        <p>Add a 2–3 line description of the project here. Explain what it does, the problem it solves, and your contribution.</p>
+        <div class="media-grid"><div class="media-placeholder"><span><strong>Project image</strong>Add an image path here, for example <code>images/iot-task-5.jpg</code>.<br><!-- Replace with an img element when ready. --></span></div><div class="media-placeholder"><span><strong>Project video</strong>Add a video path here, for example <code>videos/iot-task-5.mp4</code>.<br><!-- Replace with a video element when ready. --></span></div></div>
+        <h3>Technologies and components</h3><ul class="tech-list"><li>Add technology</li><li>Add component</li></ul><a class="project-link" href="#" aria-label="Task 5 project link placeholder">Add project link</a>
+      </div>
+    </details>
+  </div>
+</main>
+<footer class="footer"><p>&copy; 2026 Vishanth R D</p></footer>
+</body>
+</html>
