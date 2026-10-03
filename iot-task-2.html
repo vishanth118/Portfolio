@@ -1,6 +1,246 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>IoT Task 2 | Vishanth R D</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="iot-task.css"></head>
-<body><nav class="site-nav" aria-label="Main navigation"><a class="brand" href="index.html">VISHANTH R D</a><div class="nav-links"><a href="index.html">Home</a><a href="about.html">About</a><a href="projects.html">Projects</a><a href="iot-projects.html">IoT Projects</a><a href="protosem.html">ProtoSem</a></div></nav>
-<main><a class="back-link" href="iot-projects.html">← All IoT tasks</a><p class="eyebrow">IoT Project · Task 2</p><h1>Project title goes here</h1><p class="description">Add a 2–3 line description of the project here. Explain what it does, the problem it solves, and your contribution.</p>
-<section class="detail-card"><h2>Project media</h2><div class="media-grid"><div class="media-placeholder"><span><strong>Project image</strong>Add your image at <code>images/iot-task-2.jpg</code>.<br><!-- Replace placeholder with an img element when ready. --></span></div><div class="media-placeholder"><span><strong>Project video</strong>Add your video at <code>videos/iot-task-2.mp4</code>.<br><!-- Replace placeholder with a video element when ready. --></span></div></div></section>
-<section class="detail-card"><h2>Technologies and components</h2><ul class="tech-list"><li>Add technology</li><li>Add component</li></ul></section><section class="detail-card"><h2>Project link</h2><a class="project-link" href="#">Replace # with your project URL</a></section></main><footer class="footer">&copy; 2026 Vishanth R D</footer></body></html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adafruit IO MQTT LED Control | Vishanth R D</title>
+<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="iot-task.css">
+<style>
+.media-grid{align-items:stretch}.media-grid video{display:block;width:100%;height:100%;min-height:260px;max-height:480px;border-radius:12px;background:#080708;object-fit:contain}.detail-card p{color:#ded5d0}.detail-card p+p{margin-top:9px}.info-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.info-grid h3{margin:0 0 8px;color:#f0c993;font-size:1rem}.info-grid ul{padding-left:20px;color:#ded5d0}.flow{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:9px;margin-top:14px}.flow span{padding:9px 12px;border:1px solid rgba(255,201,40,.25);border-radius:10px;background:rgba(255,201,40,.07);color:#f6e4c8;font-size:.85rem}.flow b{color:var(--gold)}.detail-card ol{padding-left:22px;color:#ded5d0}.complete-report details>summary{cursor:pointer;color:#f0c993;font-weight:700}.markdown-content{margin-top:18px}.markdown-content h2{margin:24px 0 10px;color:var(--gold);font-size:1.12rem}.markdown-content h3{margin:18px 0 8px;color:#f0c993;font-size:1rem}.markdown-content h4{margin:16px 0 7px;color:#f0c993;font-size:.95rem}.markdown-content p,.markdown-content li{color:#ded5d0}.markdown-content p{margin:10px 0}.markdown-content ul,.markdown-content ol{padding-left:23px;margin:8px 0 14px}.markdown-content pre{overflow:auto;margin:14px 0;padding:16px;border:1px solid var(--line);border-radius:10px;background:#111;color:#e6dfd8;font-size:.82rem;line-height:1.55}.markdown-content pre code{font-family:Consolas,monospace}.markdown-content code{padding:1px 4px;border-radius:4px;background:#111;color:#f6e4c8;font-family:Consolas,monospace;font-size:.9em}.markdown-content .notes-table{width:100%;margin:12px 0;border-collapse:collapse;color:#ded5d0}.markdown-content .notes-table th,.markdown-content .notes-table td{padding:9px 10px;border:1px solid var(--line);text-align:left;vertical-align:top}.markdown-content .notes-table th{color:#f0c993;background:rgba(255,201,40,.07)}.markdown-content hr{margin:20px 0;border:0;border-top:1px solid var(--line)}.notes-download{margin-top:16px}.notes-download a{color:#f4c871;text-decoration:none}.notes-download a:hover{text-decoration:underline}@media(max-width:720px){.info-grid{grid-template-columns:1fr}.media-grid video{min-height:190px}}
+</style></head>
+<body>
+<nav class="site-nav" aria-label="Main navigation"><a class="brand" href="index.html">VISHANT R D</a><div class="nav-links"><a href="index.html">Home</a><a href="about.html">About</a><a href="projects.html">Projects</a><a href="iot-projects.html">IoT Projects</a><a href="protosem.html">ProtoSem</a></div></nav>
+<main>
+<a class="back-link" href="iot-projects.html">← All IoT tasks</a><p class="eyebrow">IoT Project · Task 2</p>
+<h1>Adafruit IO MQTT LED Control</h1>
+<p class="description">Extended the ESP32 LED project from local browser control to cloud-based control. An Adafruit IO dashboard publishes ON/OFF commands to the <code>light</code> feed over MQTT; the ESP32 subscribes to that feed and switches its GPIO 2 LED.</p>
+<section class="detail-card"><h2>Project demonstration</h2><div class="media-grid"><video controls preload="metadata"><source src="images/iot-task-2-demo.mp4" type="video/mp4">Your browser does not support video playback. <a href="images/iot-task-2-demo.mp4">Open the Task 2 demonstration video</a>.</video></div><p>The recording shows the Arduino IDE sketch and Adafruit IO feed setup. The feed shown is named <code>light</code> and its displayed last value is <code>OFF</code>.</p></section>
+<section class="detail-card"><h2>Overview</h2><p>Task 2 moves LED control from an ESP32-hosted webpage on the local network to Adafruit IO, so commands can reach the device through the internet. The ESP32 connects to Wi-Fi and Adafruit IO, listens to the <code>light</code> feed, and updates GPIO 2 when it receives <code>ON</code> or <code>OFF</code>.</p><div class="flow" aria-label="System flow"><span>Adafruit IO dashboard</span><b>→</b><span>MQTT broker and light feed</span><b>→</b><span>ESP32</span><b>→</b><span>GPIO 2</span><b>→</b><span>LED</span></div></section>
+<section class="detail-card"><h2>Hardware and software</h2><div class="info-grid"><div><h3>Hardware</h3><ul><li>ESP32 development board</li><li>Built-in LED or LED on GPIO 2</li><li>USB cable for programming and power</li><li>Wi-Fi with internet access</li><li>Computer or mobile device for the dashboard</li></ul></div><div><h3>Software and services</h3><ul><li>Arduino IDE and ESP32 board package</li><li>Adafruit IO Arduino library</li><li>Adafruit IO feed and dashboard</li><li>MQTT publish/subscribe messaging</li><li>Serial Monitor for connection and command messages</li></ul></div></div><p style="margin-top:14px">The LED can be the ESP32 built-in LED. For an external LED, connect GPIO 2 through a suitable series resistor to the LED and ground.</p></section>
+<section class="detail-card"><h2>Feed and command setup</h2><p>The Adafruit IO feed is named <code>light</code>. The dashboard sends the text values <code>ON</code> and <code>OFF</code>; the ESP32 subscribes to the same feed and applies the matching output state.</p><div class="info-grid"><div><h3>MQTT connection</h3><ul><li>Broker: <code>io.adafruit.com</code></li><li>Feed key: <code>light</code></li><li>Topic pattern: <code>YOUR_ADAFRUIT_USERNAME/feeds/light</code></li><li>Publisher: Adafruit IO dashboard</li><li>Subscriber: ESP32</li></ul></div><div><h3>GPIO behavior</h3><ul><li><code>ON</code> → GPIO 2 HIGH → LED on</li><li><code>OFF</code> → GPIO 2 LOW → LED off</li><li>Initial output state: LOW</li><li>Received commands are printed to Serial Monitor</li></ul></div></div><p>Credentials in the sketch are placeholders. Enter the Wi-Fi name and password, Adafruit IO username, and AIO key locally; keep the AIO key private.</p></section>
+<section class="detail-card"><h2>How it works</h2><ol><li>The ESP32 starts Wi-Fi and connects to Adafruit IO using its account credentials.</li><li>The sketch registers a message handler on the <code>light</code> feed and requests its current value.</li><li>The user selects ON or OFF on the Adafruit IO dashboard.</li><li>Adafruit IO publishes the selected value to its MQTT service and feed.</li><li>The ESP32 receives the message, checks its text, and sets GPIO 2 HIGH or LOW.</li><li>The Serial Monitor reports the received command and LED state.</li></ol></section>
+<section class="detail-card"><h2>Result and learning</h2><p>The project demonstrates cloud-based LED control with ESP32, MQTT, and Adafruit IO. It builds on Task 1 by replacing direct local browser-to-device requests with a cloud feed and publish/subscribe messaging.</p><p>The work covers feed and dashboard setup, IoT credentials, Wi-Fi connectivity, MQTT publisher and subscriber roles, callback-based message handling, and GPIO output control.</p></section>
+<section class="detail-card complete-report"><h2>Complete project write-up</h2><details><summary>Expand to read all sections from the project notes</summary><div class="markdown-content"><h2>IoT Session — Task 2: Adafruit IO Dashboard &amp; MQTT LED Control</h2><h3>1. Overview</h3><h4>Objective</h4><p>The objective of this task is to develop a cloud-connected IoT system using an <strong>ESP32, MQTT protocol, and Adafruit IO</strong>. The system allows me to control an LED remotely through an Adafruit IO dashboard.</p><h4>Problem Being Addressed</h4><p>In the previous task, I controlled the LED through a webpage hosted by the ESP32. That method required the device and ESP32 to be connected to the same local network.</p><p>In this task, I extended the project by using <strong>Adafruit IO as a cloud platform</strong>. MQTT is used to send the ON and OFF commands between the Adafruit IO dashboard and the ESP32.</p><h4>Project Summary</h4><p>The ESP32 connects to Wi-Fi and then connects to Adafruit IO. A feed named <strong>light</strong> is used for LED control.</p><p>The Adafruit IO dashboard contains an ON/OFF control connected to the <code>light</code> feed. When I select ON or OFF, Adafruit IO sends the value through MQTT. The ESP32 receives the message and changes the LED state.</p><h4>Basic Operation</h4><pre><code>Adafruit IO Dashboard
+          ↓
+      MQTT / Cloud
+          ↓
+         ESP32
+          ↓
+       GPIO 2
+          ↓
+          LED</code></pre><hr><h2>2. Concepts</h2><h3>Adafruit IO</h3><p><strong>Adafruit IO</strong> is a cloud-based IoT platform that allows devices to send, receive, visualize, and control data over the Internet.</p><p>In my project, Adafruit IO is used to provide a remote dashboard for controlling the ESP32 LED.</p><p>The main features used in this project are:</p><ul><li>Feed</li><li>Dashboard</li><li>MQTT communication</li><li>Cloud-based control</li><li>ESP32 connectivity</li></ul><h3>MQTT</h3><p><strong>MQTT (Message Queuing Telemetry Transport)</strong> is a lightweight messaging protocol commonly used for IoT applications.</p><p>MQTT uses a <strong>publish/subscribe communication model</strong>.</p><p>The main components are:</p><ol><li>Publisher</li><li>Subscriber</li><li>Broker</li></ol><h3>MQTT Publisher</h3><p>The Adafruit IO dashboard acts as the publisher when I change the LED control value.</p><p>For example:</p><pre><code>ON</code></pre><p>or</p><pre><code>OFF</code></pre><p>is published to the <code>light</code> feed.</p><h3>MQTT Subscriber</h3><p>The ESP32 acts as the subscriber.</p><p>It subscribes to the <code>light</code> feed and waits for commands from Adafruit IO.</p><h3>MQTT Broker</h3><p>The Adafruit IO MQTT service acts as the broker. It receives the message from the dashboard and delivers it to the ESP32.</p><p>The communication can be represented as:</p><pre><code>Adafruit IO Dashboard
+          ↓
+       Publisher
+          ↓
+   Adafruit IO MQTT
+       Service
+          ↓
+       MQTT Feed
+          ↓
+      Subscriber
+          ↓
+         ESP32
+          ↓
+          LED</code></pre><h3>MQTT Feed</h3><p>Adafruit IO uses feeds as communication channels.</p><p>The feed used in my project is:</p><pre><code>light</code></pre><p>The dashboard publishes the LED command to this feed, and the ESP32 receives the command from the same feed.</p><hr><h2>3. System Design</h2><h3>System Architecture</h3><p>The complete system is:</p><pre><code>User
+ ↓
+Adafruit IO Dashboard
+ ↓
+Adafruit IO MQTT Service
+ ↓
+light Feed
+ ↓
+ESP32
+ ↓
+GPIO 2
+ ↓
+LED</code></pre><h3>Data Flow</h3><ol><li>The ESP32 connects to Wi-Fi.</li><li>The ESP32 connects to Adafruit IO.</li><li>The ESP32 subscribes to the <code>light</code> feed.</li><li>I open the Adafruit IO dashboard.</li><li>I select ON or OFF.</li><li>Adafruit IO publishes the selected value.</li><li>The MQTT service forwards the message.</li><li>The ESP32 receives the message.</li><li>The ESP32 checks whether the value is ON or OFF.</li><li>GPIO 2 changes the LED state.</li></ol><h3>Communication Diagram</h3><pre><code>                    INTERNET
+                       │
+                       ▼
+              ┌─────────────────┐
+              │   Adafruit IO   │
+              │    Dashboard    │
+              └────────┬────────┘
+                       │
+                   MQTT Message
+                       │
+                       ▼
+              ┌─────────────────┐
+              │  Adafruit IO    │
+              │  MQTT Service   │
+              └────────┬────────┘
+                       │
+                    light Feed
+                       │
+                       ▼
+              ┌─────────────────┐
+              │      ESP32      │
+              │ MQTT Subscriber │
+              └────────┬────────┘
+                       │
+                    GPIO 2
+                       │
+                       ▼
+                      LED</code></pre><hr><h2>4. Hardware &amp; Software</h2><h3>Hardware Components</h3><table class="notes-table"><thead><tr><th>Component</th><th>Purpose</th></tr></thead><tbody><tr><td>ESP32 Development Board</td><td>Main IoT controller</td></tr><tr><td>Built-in LED / LED</td><td>Output controlled through Adafruit IO</td></tr><tr><td>USB Cable</td><td>Programming and powering the ESP32</td></tr><tr><td>Wi-Fi Network / Hotspot</td><td>Internet connectivity</td></tr><tr><td>Computer / Mobile</td><td>Accessing the Adafruit IO dashboard</td></tr></tbody></table><p>For my current setup, I am controlling the LED directly from the ESP32, so an external relay or AC bulb is not required.</p><h3>Software and Platforms</h3><table class="notes-table"><thead><tr><th>Software / Platform</th><th>Purpose</th></tr></thead><tbody><tr><td>Arduino IDE</td><td>Programming and uploading the ESP32 code</td></tr><tr><td>ESP32 Board Package</td><td>ESP32 support in Arduino IDE</td></tr><tr><td>Adafruit IO Arduino Library</td><td>Communication with Adafruit IO</td></tr><tr><td>Adafruit IO</td><td>Cloud IoT platform</td></tr><tr><td>MQTT</td><td>IoT messaging protocol</td></tr><tr><td>Web Browser</td><td>Accessing the Adafruit IO dashboard</td></tr></tbody></table><hr><h2>5. Adafruit IO Account and Configuration</h2><h3>Step 1 — Adafruit IO Account</h3><p>I use an Adafruit IO account to provide the cloud service required for the project.</p><p>The account provides:</p><ul><li>Adafruit IO username</li><li>AIO Key</li><li>Feeds</li><li>Dashboards</li><li>MQTT communication</li></ul><p>The username and AIO Key are entered into the ESP32 program.</p><h3>Step 2 — Create the Feed</h3><p>I created an Adafruit IO feed named:</p><pre><code>light</code></pre><p>This feed is used to send the LED control commands.</p><h4>Feed Values</h4><pre><code>ON
+OFF</code></pre><p>The feed acts as the communication channel between the Adafruit IO dashboard and the ESP32.</p><hr><h2>6. Dashboard Configuration</h2><p>I created an Adafruit IO dashboard to control the LED.</p><p>The dashboard control is connected to the:</p><pre><code>light</code></pre><p>feed.</p><h4>Dashboard Operation</h4><p>When I select:</p><pre><code>ON</code></pre><p>the dashboard publishes:</p><pre><code>ON</code></pre><p>to the <code>light</code> feed.</p><p>When I select:</p><pre><code>OFF</code></pre><p>the dashboard publishes:</p><pre><code>OFF</code></pre><p>to the <code>light</code> feed.</p><h4>Evidence</h4><p>I can include screenshots showing:</p><ul><li>Adafruit IO account</li><li><code>light</code> feed</li><li>Adafruit IO dashboard</li><li>Dashboard with ON selected</li><li>Dashboard with OFF selected</li></ul><hr><h2>7. Wiring / Setup</h2><p>For my setup, I use <strong>GPIO 2</strong> to control the LED.</p><h4>Pin Connection</h4><table class="notes-table"><thead><tr><th>ESP32 Pin</th><th>Component</th><th>Function</th></tr></thead><tbody><tr><td>GPIO 2</td><td>LED / Built-in LED</td><td>Digital output</td></tr><tr><td>GND</td><td>LED circuit</td><td>Ground</td></tr></tbody></table><p>If the ESP32's built-in LED is used, no external LED wiring is required.</p><h4>Circuit Operation</h4><pre><code>ESP32 GPIO 2
+     │
+     ▼
+    LED
+     │
+    GND</code></pre><p>When GPIO 2 is HIGH:</p><pre><code>LED ON</code></pre><p>When GPIO 2 is LOW:</p><pre><code>LED OFF</code></pre><hr><h2>8. MQTT Communication Flow</h2><p>The complete communication process is:</p><pre><code>User
+ │
+ ▼
+Adafruit IO Dashboard
+ │
+ │ Publish
+ ▼
+light Feed
+ │
+ ▼
+Adafruit IO MQTT Service
+ │
+ │ MQTT
+ ▼
+ESP32
+ │
+ ▼
+GPIO 2
+ │
+ ▼
+LED</code></pre><h3>Example — LED ON</h3><pre><code>User selects ON
+       ↓
+Dashboard publishes "ON"
+       ↓
+light feed
+       ↓
+Adafruit IO MQTT service
+       ↓
+ESP32 receives "ON"
+       ↓
+GPIO 2 = HIGH
+       ↓
+LED ON</code></pre><h3>Example — LED OFF</h3><pre><code>User selects OFF
+       ↓
+Dashboard publishes "OFF"
+       ↓
+light feed
+       ↓
+Adafruit IO MQTT service
+       ↓
+ESP32 receives "OFF"
+       ↓
+GPIO 2 = LOW
+       ↓
+LED OFF</code></pre><hr><h2>9. MQTT Feed Structure</h2><p>The Adafruit IO MQTT feed is based on the account username and feed name.</p><p>The feed follows this structure:</p><pre><code>YOUR_ADAFRUIT_USERNAME/feeds/light</code></pre><h4>MQTT Parameters</h4><table class="notes-table"><thead><tr><th>Parameter</th><th>Description</th></tr></thead><tbody><tr><td>MQTT Server</td><td>io.adafruit.com</td></tr><tr><td>Feed</td><td>light</td></tr><tr><td>Publisher</td><td>Adafruit IO Dashboard</td></tr><tr><td>Subscriber</td><td>ESP32</td></tr><tr><td>Message</td><td>ON / OFF</td></tr><tr><td>Transport</td><td>Wi-Fi / Internet</td></tr></tbody></table><hr><h2>10. Implementation</h2><h3>Program Logic</h3><p>The ESP32 program follows these steps:</p><ol><li>Define the Wi-Fi credentials.</li><li>Define the Adafruit IO username and AIO Key.</li><li>Create the Adafruit IO connection.</li><li>Define the <code>light</code> feed.</li><li>Set GPIO 2 as an output.</li><li>Connect the ESP32 to Wi-Fi.</li><li>Connect the ESP32 to Adafruit IO.</li><li>Subscribe to the <code>light</code> feed.</li><li>Wait for a message.</li><li>If the message is <code>ON</code>, turn the LED ON.</li><li>If the message is <code>OFF</code>, turn the LED OFF.</li></ol><h3>Complete ESP32 Source Code</h3><pre><code>#include "AdafruitIO_WiFi.h"
+
+// ==============================
+// Wi-Fi Details
+// ==============================
+#define WIFI_SSID "YOUR_WIFI_NAME"
+#define WIFI_PASS "YOUR_WIFI_PASSWORD"
+
+// ==============================
+// Adafruit IO Details
+// ==============================
+#define IO_USERNAME "YOUR_ADAFRUIT_USERNAME"
+#define IO_KEY      "YOUR_ADAFRUIT_IO_KEY"
+
+// ==============================
+// LED
+// ==============================
+#define LED_PIN 2
+
+// Create Adafruit IO connection
+AdafruitIO_WiFi io(IO_USERNAME, IO_KEY, WIFI_SSID, WIFI_PASS);
+
+// Create the light feed
+AdafruitIO_Feed *lightFeed = io.feed("light");
+
+// ==============================
+// Receive message from Adafruit IO
+// ==============================
+void handleMessage(AdafruitIO_Data *data) {
+
+  String command = data-&gt;toString();
+
+  Serial.print("Received: ");
+  Serial.println(command);
+
+  if (command == "ON") {
+
+    digitalWrite(LED_PIN, HIGH);
+
+    Serial.println("LED ON");
+  }
+
+  else if (command == "OFF") {
+
+    digitalWrite(LED_PIN, LOW);
+
+    Serial.println("LED OFF");
+  }
+}
+
+// ==============================
+// Setup
+// ==============================
+void setup() {
+
+  Serial.begin(115200);
+
+  pinMode(LED_PIN, OUTPUT);
+
+  // LED OFF initially
+  digitalWrite(LED_PIN, LOW);
+
+  Serial.println();
+  Serial.println("Connecting to Adafruit IO...");
+
+  // Connect to Adafruit IO
+  io.connect();
+
+  // Wait for connection
+  while (io.status() &lt; AIO_CONNECTED) {
+
+    Serial.print(".");
+    delay(500);
+  }
+
+  Serial.println();
+  Serial.println("Connected to Adafruit IO!");
+
+  // Listen for changes in the light feed
+  lightFeed-&gt;onMessage(handleMessage);
+
+  // Get the current value
+  lightFeed-&gt;get();
+}
+
+// ==============================
+// Main Loop
+// ==============================
+void loop() {
+
+  io.run();
+}</code></pre><hr><h2>11. Explanation of Important Code Sections</h2><h3>Wi-Fi and Adafruit IO Configuration</h3><pre><code>#define WIFI_SSID "YOUR_WIFI_NAME"
+#define WIFI_PASS "YOUR_WIFI_PASSWORD"
+
+#define IO_USERNAME "YOUR_ADAFRUIT_USERNAME"
+#define IO_KEY "YOUR_ADAFRUIT_IO_KEY"</code></pre><p>These values allow the ESP32 to connect to Wi-Fi and authenticate with Adafruit IO.</p><h3>LED Pin</h3><pre><code>#define LED_PIN 2</code></pre><p>GPIO 2 is used to control the LED.</p><h3>Adafruit IO Connection</h3><pre><code>AdafruitIO_WiFi io(IO_USERNAME, IO_KEY, WIFI_SSID, WIFI_PASS);</code></pre><p>This creates the connection between the ESP32, Wi-Fi, and Adafruit IO.</p><h3>Feed</h3><pre><code>AdafruitIO_Feed *lightFeed = io.feed("light");</code></pre><p>This defines the Adafruit IO feed used for controlling the LED.</p><h3>Connecting to Adafruit IO</h3><pre><code>io.connect();
+
+while (io.status() &lt; AIO_CONNECTED) {
+  Serial.print(".");
+  delay(500);
+}</code></pre><p>The ESP32 waits until it successfully connects to Adafruit IO.</p><h3>Receiving MQTT Data</h3><pre><code>lightFeed-&gt;onMessage(handleMessage);</code></pre><p>This tells the ESP32 to run <code>handleMessage()</code> whenever a new value is received from the <code>light</code> feed.</p><h3>LED ON/OFF Control</h3><pre><code>if (command == "ON") {
+  digitalWrite(LED_PIN, HIGH);
+}</code></pre><p>The LED turns ON when the received value is <code>ON</code>.</p><pre><code>else if (command == "OFF") {
+  digitalWrite(LED_PIN, LOW);
+}</code></pre><p>The LED turns OFF when the received value is <code>OFF</code>.</p><hr><h2>12. Evidence</h2><h3>Hardware Setup</h3><p>I can include photographs showing:</p><ul><li>ESP32 development board</li><li>USB connection</li><li>LED / built-in LED</li><li>Complete hardware setup</li></ul><h3>Adafruit IO Dashboard</h3><p>I can include screenshots showing:</p><ul><li>Adafruit IO dashboard</li><li><code>light</code> feed</li><li>ON control</li><li>OFF control</li><li>Feed activity/data</li></ul><h3>Demonstration</h3><p>The demonstration can show:</p><ol><li>ESP32 powered ON.</li><li>ESP32 connected to Wi-Fi.</li><li>Adafruit IO dashboard opened.</li><li><code>light</code> control selected.</li><li>ON command sent.</li><li>LED turns ON.</li><li>OFF command sent.</li><li>LED turns OFF.</li><li>Serial Monitor showing the received ON/OFF commands.</li></ol><hr><h2>13. Challenges &amp; Fixes</h2><h3>Challenge 1 — Adafruit IO Connection Failure</h3><p><strong>Problem:</strong>   The ESP32 could not connect to Adafruit IO.</p><p><strong>Solution:</strong>   I checked the Wi-Fi credentials, Adafruit IO username, AIO Key, and Internet connection.</p><h3>Challenge 2 — Incorrect Feed Name</h3><p><strong>Problem:</strong>   The ESP32 was connected to Adafruit IO but did not respond to the dashboard command.</p><p><strong>Solution:</strong>   I checked that the feed name in the code matched the feed created in Adafruit IO.</p><p>The feed used in my project is:</p><pre><code>light</code></pre><h3>Challenge 3 — Authentication Error</h3><p><strong>Problem:</strong>   Adafruit IO did not accept the ESP32 connection.</p><p><strong>Solution:</strong>   I checked the Adafruit IO username and AIO Key entered in the program.</p><h3>Challenge 4 — LED Did Not Respond</h3><p><strong>Problem:</strong>   The message was received but the LED did not change state.</p><p><strong>Solution:</strong>   I checked the GPIO 2 configuration and verified the received command using the Arduino Serial Monitor.</p><h3>Challenge 5 — Internet Connectivity</h3><p><strong>Problem:</strong>   Adafruit IO communication requires Internet access.</p><p><strong>Solution:</strong>   I connected the ESP32 to a Wi-Fi network with Internet access before connecting to Adafruit IO.</p><hr><h2>14. Learning Reflection</h2><p>This task helped me understand how an IoT device can communicate with a cloud platform using the <strong>MQTT protocol</strong>.</p><p>I learned how Adafruit IO can be used to create a cloud dashboard and how an ESP32 can receive commands from an Adafruit IO feed.</p><p>I also learned the basic roles of an MQTT publisher, subscriber, and broker.</p><p>Compared with my previous ESP32 web-server task, this project introduced <strong>cloud-based LED control</strong>, allowing the ESP32 to communicate with Adafruit IO through the Internet.</p><p>This task improved my understanding of:</p><ul><li>ESP32 programming</li><li>MQTT communication</li><li>Adafruit IO</li><li>Wi-Fi connectivity</li><li>Cloud IoT platforms</li><li>Feed configuration</li><li>Dashboard control</li><li>GPIO control</li><li>ESP32-to-cloud communication</li></ul><hr><h2>Final Result</h2><p>The completed system demonstrates <strong>cloud-based LED control using ESP32, MQTT, and Adafruit IO</strong>.</p><p>The ESP32 connects to Wi-Fi and Adafruit IO. The user controls the <code>light</code> feed from the Adafruit IO dashboard. The ESP32 receives the ON or OFF command and changes the LED state through GPIO 2.</p><h4>Final System</h4><pre><code>Adafruit IO Dashboard
+          ↓
+     MQTT / Cloud
+          ↓
+         ESP32
+          ↓
+       GPIO 2
+          ↓
+          LED</code></pre><p>This project demonstrates the basic working of a <strong>cloud-connected IoT system</strong> and provides a foundation for more advanced IoT projects using sensors, dashboards, and remote device control.</p></div></details><p class="notes-download"><a href="iot-task-2-notes.md" download>Download the original project notes (.md)</a></p></section>
+<section class="detail-card"><h2>Project source</h2><p>The complete ESP32 sketch, configuration notes, communication flow, challenges, and reflection are included in the project write-up above and the downloadable notes.</p></section>
+</main><footer class="footer">&copy; 2026 Vishanth R D</footer></body></html>
